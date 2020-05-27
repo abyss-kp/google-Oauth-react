@@ -1,36 +1,26 @@
-import React, { useState } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { Route, Switch, Link } from 'react-router-dom';
 import './App.css';
-import GoogleLogin from 'react-google-login';
+import Public from './components/Public';
+import Private from './components/Private';
+import Home from './components/home';
+import PrivateRoute from './components/PrivateRoute';
+import GoogleOAuth from './components/GoogleOAuth';
 function App() {
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [url, setUrl] = useState("")
-  const responseGoogle = (res) => {
-    console.log("google res", res)
-    setName(res.profileObj.name)
-    setEmail(res.profileObj.email)
-    setUrl(res.profileObj.imageUrl)
-  }
   return (
     <div className="App">
-      <header className="App-header">
-        {name ? <>
-
-          <h2>Welcome:{name}</h2>
-          <h2>Email:{email}</h2>
-          <img src={url} alt="name" />
-        </>
-          : <>
-            <img src={logo} className="App-logo" alt="logo" />
-            <GoogleLogin
-              clientId="834520349168-bhmfqio1abgg41qquk0lgoo3okrg1vv5.apps.googleusercontent.com"
-              buttonText="Login"
-              onSuccess={responseGoogle}
-              onFailure={responseGoogle}
-              cookiePolicy={'single_host_origin'}
-            /></>}
-      </header>
+      <Link to="/">Home </Link>&nbsp;&nbsp;
+      <Link to="/public">Public </Link>&nbsp;&nbsp;
+      <Link to="/private">Private </Link>&nbsp;&nbsp;
+      <Link to="/login">GoogleOAuth</Link>&nbsp;&nbsp;
+      <Switch>
+        <Route path="/" component={Home} exact />
+        <Route path="/public" component={Public} />
+        <Route path="/login" component={GoogleOAuth} />
+        {/* <Route path="/private" component={Private} /> */}
+        <PrivateRoute path='/private' component={Private} />
+      </Switch>
+      {/* <GoogleOAuth /> */}
     </div>
   );
 }
