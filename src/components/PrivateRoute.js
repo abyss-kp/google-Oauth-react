@@ -4,9 +4,9 @@ import {
 } from 'react-router-dom'
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
-    // fakeAuth.isAuthenticated === true
-    //   ? <Component {...props} />
-    //   : 
+    localStorage.getItem('OAuthUserDetail')
+      ? <Component {...props} />
+      :
       <Redirect to='/login' />
   )} />
 )
